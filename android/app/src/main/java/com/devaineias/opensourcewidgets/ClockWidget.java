@@ -6,7 +6,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.widget.RemoteViews;
 
-import com.example.opensourcewidgets.R;
+import com.devaineias.opensourcewidgets.R;
 
 
 /**
