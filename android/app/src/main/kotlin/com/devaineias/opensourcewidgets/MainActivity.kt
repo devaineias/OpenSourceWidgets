@@ -1,4 +1,4 @@
-package com.example.opensourcewidgets
+package com.devaineias.opensourcewidgets
 
 import io.flutter.embedding.android.FlutterActivity
 

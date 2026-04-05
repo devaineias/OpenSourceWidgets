@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.opensourcewidgets"
+    namespace = "com.devaineias.opensourcewidgets"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
@@ -36,6 +36,9 @@ android {
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig = signingConfigs.getByName("debug")
         }
+    }
+    buildFeatures {
+        viewBinding = true
     }
 }
 
