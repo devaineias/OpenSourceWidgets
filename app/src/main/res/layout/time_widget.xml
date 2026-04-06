@@ -9,7 +9,6 @@
         android:id="@+id/text_hour_word"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Two"
         android:textSize="26sp"
         android:textStyle="bold"
         android:textColor="#FFFFFF" />
@@ -18,7 +17,6 @@
         android:id="@+id/text_minute_word"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Forty Six"
         android:textSize="26sp"
         android:textColor="#FFFFFF" />
 
@@ -47,20 +45,26 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/weather_click_area"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:clickable="true"
+            android:focusable="true">
+
             <ImageView
+                android:id="@+id/weather_icon"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@android:drawable/ic_menu_day" />
+
             <TextView
                 android:id="@+id/count_weather"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="22°"
+                android:text="22°C"
                 android:textColor="#FFFFFF" />
         </LinearLayout>
 
