@@ -1,82 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="24dp"
-    android:gravity="center_horizontal">
+    android:padding="24dp">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Widget Settings"
-        android:textSize="24sp"
+        android:textSize="28sp"
         android:textStyle="bold"
         android:layout_marginBottom="32dp"/>
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Set Weather Location:"
-        android:layout_marginBottom="8dp"/>
+        android:text="Select City:"
+        android:textStyle="bold" />
 
     <AutoCompleteTextView
         android:id="@+id/city_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Type a city (e.g. Athens)"
-        android:completionThreshold="1"
-        android:layout_marginBottom="16dp"/>
+        android:hint="Type a city name..."
+        android:completionThreshold="3"
+        android:inputType="textCapWords"
+        android:layout_marginBottom="24dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Temperature Unit:"
+        android:textStyle="bold" />
 
     <RadioGroup
         android:id="@+id/unit_group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginBottom="16dp"
-        android:gravity="center">
+        android:layout_marginBottom="24dp">
 
         <RadioButton
             android:id="@+id/radio_celsius"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Celsius (°C)"
-            android:checked="true" />
+            android:checked="true"
+            android:layout_marginEnd="16dp"/>
 
         <RadioButton
             android:id="@+id/radio_fahrenheit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
             android:text="Fahrenheit (°F)" />
     </RadioGroup>
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Select Weather App to Open:"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="8dp"/>
+        android:text="Tap Widget to Open:"
+        android:textStyle="bold" />
 
     <Spinner
         android:id="@+id/app_spinner"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp" />
+        android:layout_height="48dp"
+        android:layout_marginBottom="32dp"
+        android:background="#1A000000" /> <Button
+    android:id="@+id/btn_save"
+    android:layout_width="match_parent"
+    android:layout_height="56dp"
+    android:text="Save &amp; Update Widget"
+    android:layout_marginBottom="16dp"/>
 
     <Button
-        android:id="@+id/btn_save"
+        android:id="@+id/btn_permission"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Save Settings" />
+        android:text="Grant Notification Access"
+        style="?android:attr/buttonBarButtonStyle"
+        android:textColor="?android:attr/colorError"
+        tools:targetApi="26" />
 
-
-
-    <TextView
-        android:id="@+id/status_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Long-press home screen to add widgets."
-        android:alpha="0.6"/>
 </LinearLayout>

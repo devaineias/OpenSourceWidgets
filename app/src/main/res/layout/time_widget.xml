@@ -37,7 +37,7 @@
                 android:layout_height="24dp"
                 android:src="@android:drawable/ic_dialog_email" />
             <TextView
-                android:id="@+id/count_notifications"
+                android:id="@+id/txt_notif_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="2"
@@ -79,7 +79,7 @@
                 android:layout_height="24dp"
                 android:src="@android:drawable/ic_dialog_info" />
             <TextView
-                android:id="@+id/count_emails"
+                android:id="@+id/txt_email_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="5"

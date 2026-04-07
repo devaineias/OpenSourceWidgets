@@ -19,27 +19,35 @@ class TimeWidget : AppWidgetProvider() {
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
         for (appWidgetId in appWidgetIds) {
             val views = RemoteViews(context.packageName, com.devaineias.opensourcewidgets.R.layout.time_widget)
+            val calendar = Calendar.getInstance()
+
+            val hour = calendar.get(Calendar.HOUR)
+            val minute = calendar.get(Calendar.MINUTE)
+
+            // Update Time Words
+            views.setTextViewText(com.devaineias.opensourcewidgets.R.id.text_hour_word, convertToWords(if (hour == 0) 12 else hour, false))
+            views.setTextViewText(com.devaineias.opensourcewidgets.R.id.text_minute_word, convertToWords(minute, true))
 
             // 1. Setup Click Action
             val prefs = context.getSharedPreferences("WidgetPrefs", Context.MODE_PRIVATE)
             val userCity = prefs.getString("city", "Athens") ?: "Athens"
-
             val targetPackage = prefs.getString("target_package", "DEFAULT")
 
-            val intent = if (targetPackage == "DEFAULT" || targetPackage == null) {
-                Intent(Intent.ACTION_VIEW,
-                    "https://www.google.com/search?q=weather+$userCity".toUri())
+            val intent: Intent? = if (targetPackage == "DEFAULT" || targetPackage == null) {
+                // Option A: Open Google Weather/Search if no specific app is chosen
+                context.packageManager.getLaunchIntentForPackage("com.google.android.googlequicksearchbox")
             } else {
+                // Option B: Open the specific app you selected in MainActivity
                 context.packageManager.getLaunchIntentForPackage(targetPackage)
             }
 
-            // Make sure the intent isn't null (some apps might have been uninstalled)
             if (intent != null) {
-                val pendingIntent = android.app.PendingIntent.getActivity(
+                // Wrap the intent so the widget can fire it
+                val pendingIntent = PendingIntent.getActivity(
                     context,
                     0,
                     intent,
-                    android.app.PendingIntent.FLAG_UPDATE_CURRENT or android.app.PendingIntent.FLAG_IMMUTABLE
+                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
                 )
                 views.setOnClickPendingIntent(com.devaineias.opensourcewidgets.R.id.weather_click_area, pendingIntent)
             }
@@ -73,6 +81,14 @@ class TimeWidget : AppWidgetProvider() {
                 }
                 appWidgetManager.partiallyUpdateAppWidget(appWidgetId, views)
             }.start()
+
+            // Update Notification Count
+            val notifCount = prefs.getInt("notification_count", 0)
+            val emailCount = prefs.getInt("email_count", 0)
+
+            // Update your layout
+            views.setTextViewText(com.devaineias.opensourcewidgets.R.id.txt_notif_count, notifCount.toString())
+            views.setTextViewText(com.devaineias.opensourcewidgets.R.id.txt_email_count, emailCount.toString())
 
             // Update the UI immediately
             appWidgetManager.updateAppWidget(appWidgetId, views)
@@ -132,7 +148,7 @@ class TimeWidget : AppWidgetProvider() {
     }
 
     private fun fetchWeather(city: String, unitType: String, unitLabel: String): WeatherResult {
-        val openWeatherKey = "API_KEY"
+        val openWeatherKey = "abc"
         return try {
             val url = URL("https://api.openweathermap.org/data/2.5/weather?q=$city&units=$unitType&appid=$openWeatherKey")
             val response = Scanner(url.openStream()).useDelimiter("\\A").next()
