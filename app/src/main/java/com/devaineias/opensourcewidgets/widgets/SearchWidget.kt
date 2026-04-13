@@ -7,6 +7,10 @@ import android.content.Context
 import android.content.Intent
 import android.widget.RemoteViews
 import com.devaineias.opensourcewidgets.R
+import android.graphics.Color
+import android.graphics.RenderEffect
+import android.os.Build
+import android.view.View
 
 class SearchWidget : AppWidgetProvider() {
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
