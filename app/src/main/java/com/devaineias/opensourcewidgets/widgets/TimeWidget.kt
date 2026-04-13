@@ -148,7 +148,7 @@ class TimeWidget : AppWidgetProvider() {
     }
 
     private fun fetchWeather(city: String, unitType: String, unitLabel: String): WeatherResult {
-        val openWeatherKey = "abc"
+        val openWeatherKey = "API_KEY"
         return try {
             val url = URL("https://api.openweathermap.org/data/2.5/weather?q=$city&units=$unitType&appid=$openWeatherKey")
             val response = Scanner(url.openStream()).useDelimiter("\\A").next()

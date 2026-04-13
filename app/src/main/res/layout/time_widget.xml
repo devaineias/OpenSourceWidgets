@@ -40,7 +40,7 @@
                 android:id="@+id/txt_notif_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="2"
+                android:text=""
                 android:textColor="#FFFFFF" />
         </LinearLayout>
 
@@ -64,7 +64,7 @@
                 android:id="@+id/count_weather"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="22°C"
+                android:text=""
                 android:textColor="#FFFFFF" />
         </LinearLayout>
 
@@ -82,7 +82,7 @@
                 android:id="@+id/txt_email_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="5"
+                android:text=""
                 android:textColor="#FFFFFF" />
         </LinearLayout>
 

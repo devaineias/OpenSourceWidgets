@@ -18,6 +18,7 @@ import java.util.Scanner
 import android.provider.Settings
 import androidx.core.app.NotificationManagerCompat
 import android.view.View
+import com.google.android.material.color.DynamicColors
 
 class MainActivity : Activity() {
 
@@ -28,6 +29,8 @@ class MainActivity : Activity() {
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        DynamicColors.applyToActivitiesIfAvailable(this.application)
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
@@ -142,7 +145,7 @@ class MainActivity : Activity() {
 
     // Geocoding Helper Function
     fun fetchCitySuggestions(query: String): List<String> {
-        val apiKey = "abc"
+        val apiKey = "API_KEY"
         val limit = 5
         val suggestions = mutableListOf<String>()
 

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.OpenSourceWidgets" parent="android:Theme.Material.Light.NoActionBar" />
-
+<!--    /<style name="Theme.OpenSourceWidgets" parent="android:Theme.Material.Light.NoActionBar" />-->
+    <style name="Theme.OpenSourceWidgets" parent="Theme.Material3.DayNight.NoActionBar">
+    </style>
     <style name="Theme.OpenSourceWidgets.AppWidgetContainerParent" parent="@android:style/Theme.DeviceDefault">
         <!-- Radius of the outer bound of widgets to make the rounded corners -->
         <item name="appWidgetRadius">16dp</item>
