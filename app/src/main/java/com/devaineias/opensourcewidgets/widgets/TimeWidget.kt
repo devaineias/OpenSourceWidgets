@@ -60,7 +60,7 @@ class TimeWidget : AppWidgetProvider() {
                 val currentTime = System.currentTimeMillis()
 
                 if (currentTime - lastUpdate >= 3600000) { // Hourly check
-                    val result = fetchWeather(userCity, unitType, unitLabel)
+                    val result = fetchWeather(context, userCity, unitType, unitLabel)
 
                     if (result.temp != "N/A") {
                         prefs.edit().apply {
@@ -147,7 +147,7 @@ class TimeWidget : AppWidgetProvider() {
         }
     }
 
-    private fun fetchWeather(city: String, unitType: String, unitLabel: String): WeatherResult {
+    private fun fetchWeather(context: Context, city: String, unitType: String, unitLabel: String): WeatherResult {
         val openWeatherKey = "API_KEY"
         return try {
             val url = URL("https://api.openweathermap.org/data/2.5/weather?q=$city&units=$unitType&appid=$openWeatherKey")
@@ -156,17 +156,36 @@ class TimeWidget : AppWidgetProvider() {
 
             val temp = json.getJSONObject("main").getInt("temp")
             val conditionId = json.getJSONArray("weather").getJSONObject(0).getInt("id")
+            val iconCode = json.getJSONArray("weather").getJSONObject(0).getString("icon")
 
-            // Map OpenWeather Condition IDs to System Icons
-            val icon = when (conditionId) {
-                in 200..232 -> android.R.drawable.ic_lock_idle_low_battery // Thunderstorm (Generic placeholder)
-                in 300..531 -> android.R.drawable.stat_sys_download // Rain
-                in 600..622 -> android.R.drawable.ic_menu_edit // Snow (Generic placeholder)
-                800 -> android.R.drawable.ic_menu_day // Clear
-                else -> android.R.drawable.ic_menu_report_image // Clouds/Others
+            val isNight = iconCode.endsWith("n")
+
+            val tempSuffix = when {
+                temp <= 10 -> "cold"
+                temp >= 25 -> "hot"
+                else -> "neutral"
             }
 
-            WeatherResult("$temp°$unitLabel", icon)
+            val baseName = when (conditionId) {
+                in 200..232 -> "lightning"
+                in 300..531 -> "rain"
+                in 600..622 -> "snow"
+                800 -> if (isNight) "moon" else "sun"
+                in 801..804 -> if (isNight) "cloud_moon" else "cloud_sun"
+                else -> "sun" // Default fallback
+            }
+
+            val resourceName = "ic_${baseName}_$tempSuffix"
+
+            val iconResId: Int = context.resources.getIdentifier(
+                resourceName,
+                "drawable",
+                context.packageName
+            )
+            
+            val finalIcon = if (iconResId != 0) iconResId else android.R.drawable.ic_menu_help
+
+            WeatherResult("$temp°$unitLabel", finalIcon)
         } catch (e: Exception) {
             WeatherResult("N/A", android.R.drawable.ic_dialog_alert)
         }
