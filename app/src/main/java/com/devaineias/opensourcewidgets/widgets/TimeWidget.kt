@@ -11,6 +11,7 @@ import java.net.URL
 import org.json.JSONObject
 import java.util.*
 import androidx.core.net.toUri
+import com.devaineias.opensourcewidgets.R
 
 class TimeWidget : AppWidgetProvider() {
 
@@ -18,15 +19,15 @@ class TimeWidget : AppWidgetProvider() {
 
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
         for (appWidgetId in appWidgetIds) {
-            val views = RemoteViews(context.packageName, com.devaineias.opensourcewidgets.R.layout.time_widget)
+            val views = RemoteViews(context.packageName, R.layout.time_widget)
             val calendar = Calendar.getInstance()
 
             val hour = calendar.get(Calendar.HOUR)
             val minute = calendar.get(Calendar.MINUTE)
 
             // Update Time Words
-            views.setTextViewText(com.devaineias.opensourcewidgets.R.id.text_hour_word, convertToWords(if (hour == 0) 12 else hour, false))
-            views.setTextViewText(com.devaineias.opensourcewidgets.R.id.text_minute_word, convertToWords(minute, true))
+            views.setTextViewText(R.id.text_hour_word, convertToWords(if (hour == 0) 12 else hour, false))
+            views.setTextViewText(R.id.text_minute_word, convertToWords(minute, true))
 
             // 1. Setup Click Action
             val prefs = context.getSharedPreferences("WidgetPrefs", Context.MODE_PRIVATE)
@@ -49,7 +50,7 @@ class TimeWidget : AppWidgetProvider() {
                     intent,
                     PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
                 )
-                views.setOnClickPendingIntent(com.devaineias.opensourcewidgets.R.id.weather_click_area, pendingIntent)
+                views.setOnClickPendingIntent(R.id.weather_click_area, pendingIntent)
             }
 
             // 2. Weather Update Logic
@@ -69,15 +70,15 @@ class TimeWidget : AppWidgetProvider() {
                             putLong("last_weather_update", currentTime)
                             apply()
                         }
-                        views.setTextViewText(com.devaineias.opensourcewidgets.R.id.count_weather, result.temp)
-                        views.setImageViewResource(com.devaineias.opensourcewidgets.R.id.weather_icon, result.iconRes)
+                        views.setTextViewText(R.id.count_weather, result.temp)
+                        views.setImageViewResource(R.id.weather_icon, result.iconRes)
                     }
                 } else {
                     // Use Cached Data
                     val cachedTemp = prefs.getString("last_temp_string", "--°$unitLabel")
                     val cachedIcon = prefs.getInt("last_icon_res", android.R.drawable.ic_menu_day)
-                    views.setTextViewText(com.devaineias.opensourcewidgets.R.id.count_weather, cachedTemp)
-                    views.setImageViewResource(com.devaineias.opensourcewidgets.R.id.weather_icon, cachedIcon)
+                    views.setTextViewText(R.id.count_weather, cachedTemp)
+                    views.setImageViewResource(R.id.weather_icon, cachedIcon)
                 }
                 appWidgetManager.partiallyUpdateAppWidget(appWidgetId, views)
             }.start()
@@ -86,10 +87,18 @@ class TimeWidget : AppWidgetProvider() {
             val notifCount = prefs.getInt("notification_count", 0)
             val emailCount = prefs.getInt("email_count", 0)
 
-            // Update your layout
-            views.setTextViewText(com.devaineias.opensourcewidgets.R.id.txt_notif_count, notifCount.toString())
-            views.setTextViewText(com.devaineias.opensourcewidgets.R.id.txt_email_count, emailCount.toString())
+            // Update layout
+            views.setTextViewText(R.id.txt_notif_count, notifCount.toString())
+            views.setTextViewText(R.id.txt_email_count, emailCount.toString())
 
+            if (emailCount == 0) {
+                views.setImageViewResource(
+                    R.id.ic_email_count,
+                    R.drawable.ic_mail_read
+                )
+            } else {
+                views.setImageViewResource(R.id.ic_email_count, R.drawable.ic_mail_unread)
+            }
             // Update the UI immediately
             appWidgetManager.updateAppWidget(appWidgetId, views)
         }
@@ -182,7 +191,7 @@ class TimeWidget : AppWidgetProvider() {
                 "drawable",
                 context.packageName
             )
-            
+
             val finalIcon = if (iconResId != 0) iconResId else android.R.drawable.ic_menu_help
 
             WeatherResult("$temp°$unitLabel", finalIcon)
