@@ -21,10 +21,10 @@ class DateWidget : AppWidgetProvider() {
             views.setTextViewText(com.devaineias.opensourcewidgets.R.id.text_day_number, SimpleDateFormat("d", Locale.getDefault()).format(now))
 
             // Row 2: Month Name
-            views.setTextViewText(com.devaineias.opensourcewidgets.R.id.text_month, SimpleDateFormat("MMMM", Locale.getDefault()).format(now))
+            views.setTextViewText(com.devaineias.opensourcewidgets.R.id.text_month, SimpleDateFormat("MMMM", Locale.getDefault()).format(now).uppercase())
 
             // Row 3: Day of week and Year
-            views.setTextViewText(com.devaineias.opensourcewidgets.R.id.text_year_info, SimpleDateFormat("E yyyy", Locale.getDefault()).format(now))
+            views.setTextViewText(com.devaineias.opensourcewidgets.R.id.text_year_info, SimpleDateFormat("E yyyy", Locale.getDefault()).format(now).uppercase())
 
             appWidgetManager.updateAppWidget(appWidgetId, views)
         }
