@@ -7,6 +7,7 @@ import android.appwidget.AppWidgetProvider
 import android.content.Context
 import android.content.Intent
 import android.widget.RemoteViews
+import com.devaineias.opensourcewidgets.R
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -25,6 +26,23 @@ class DateWidget : AppWidgetProvider() {
 
             // Row 3: Day of week and Year
             views.setTextViewText(com.devaineias.opensourcewidgets.R.id.text_year_info, SimpleDateFormat("E yyyy", Locale.getDefault()).format(now).uppercase())
+
+            // 1. Create the Intent to open the Calendar
+            val calendarIntent = Intent(Intent.ACTION_MAIN).apply {
+                addCategory(Intent.CATEGORY_APP_CALENDAR)
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            }
+
+            // 2. Wrap it in a PendingIntent (Required for Home Screen Widgets)
+            val pendingIntent = PendingIntent.getActivity(
+                context,
+                0,
+                calendarIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE // FLAG_IMMUTABLE is required for Android 12+
+            )
+
+            // 3. Attach the click listener to the root layout ID
+            views.setOnClickPendingIntent(R.id.widget_date, pendingIntent)
 
             appWidgetManager.updateAppWidget(appWidgetId, views)
         }

@@ -170,8 +170,8 @@ class TimeWidget : AppWidgetProvider() {
             val isNight = iconCode.endsWith("n")
 
             val tempSuffix = when {
-                temp <= 10 -> "cold"
-                temp >= 25 -> "hot"
+                temp <= 7 -> "cold"
+                temp >= 28 -> "hot"
                 else -> "neutral"
             }
 
