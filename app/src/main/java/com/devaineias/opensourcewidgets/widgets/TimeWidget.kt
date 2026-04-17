@@ -157,7 +157,7 @@ class TimeWidget : AppWidgetProvider() {
         // 3. Apply the "Proper English" prefix for minutes
         return if (isMinute) {
             when (num) {
-                in 1..9 -> "Oh $baseWord"
+                in 1..9 -> "O' $baseWord"
                 else -> "And $baseWord"
             }
         } else {
