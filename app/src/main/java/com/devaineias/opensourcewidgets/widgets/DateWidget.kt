@@ -15,17 +15,17 @@ class DateWidget : AppWidgetProvider() {
 
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
         for (appWidgetId in appWidgetIds) {
-            val views = RemoteViews(context.packageName, com.devaineias.opensourcewidgets.R.layout.date_widget)
+            val views = RemoteViews(context.packageName, R.layout.date_widget)
             val now = Calendar.getInstance().time
 
             // Row 1: Day Number
-            views.setTextViewText(com.devaineias.opensourcewidgets.R.id.text_day_number, SimpleDateFormat("d", Locale.getDefault()).format(now))
+            views.setTextViewText(R.id.text_day_number, SimpleDateFormat("d", Locale.getDefault()).format(now))
 
             // Row 2: Month Name
-            views.setTextViewText(com.devaineias.opensourcewidgets.R.id.text_month, SimpleDateFormat("MMMM", Locale.getDefault()).format(now).uppercase())
+            views.setTextViewText(R.id.text_month, SimpleDateFormat("MMMM", Locale.getDefault()).format(now).uppercase())
 
             // Row 3: Day of week and Year
-            views.setTextViewText(com.devaineias.opensourcewidgets.R.id.text_year_info, SimpleDateFormat("E yyyy", Locale.getDefault()).format(now).uppercase())
+            views.setTextViewText(R.id.text_year_info, SimpleDateFormat("E yyyy", Locale.getDefault()).format(now).uppercase())
 
             // 1. Create the Intent to open the Calendar
             val calendarIntent = Intent(Intent.ACTION_MAIN).apply {
