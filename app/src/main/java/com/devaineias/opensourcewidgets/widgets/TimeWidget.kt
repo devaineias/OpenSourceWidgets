@@ -136,23 +136,33 @@ class TimeWidget : AppWidgetProvider() {
     }
 
     private fun convertToWords(num: Int, isMinute: Boolean): String {
-        val units = arrayOf("", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten",
-            "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen")
+        val units = arrayOf(
+            "", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten",
+            "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"
+        )
         val tens = arrayOf("", "", "Twenty", "Thirty", "Forty", "Fifty")
 
+        // 1. Handle the special "Zero" cases immediately
+        if (num == 0) {
+            return if (isMinute) "O'Clock" else "Twelve"
+        }
+
+        // 2. Convert the raw number (1 to 59) into words
+        val baseWord = if (num < 20) {
+            units[num]
+        } else {
+            "${tens[num / 10]} ${units[num % 10]}".trim()
+        }
+
+        // 3. Apply the "Proper English" prefix for minutes
         return if (isMinute) {
-            when {
-                num == 0 -> "O'Clock"
-                num in 1..9 -> "And ${units[num]}" // Adds "And " for 1 through 9
-                num < 20 -> units[num]
-                else -> "${tens[num / 10]} ${units[num % 10]}".trim()
+            when (num) {
+                in 1..9 -> "Oh $baseWord"
+                else -> "And $baseWord"
             }
         } else {
-            when {
-                num == 0 -> "Twelve"
-                num < 20 -> units[num]
-                else -> "${tens[num / 10]} ${units[num % 10]}".trim()
-            }
+            // It's an hour, so just return the word
+            baseWord
         }
     }
 
